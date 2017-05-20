@@ -4,8 +4,8 @@ module.exports = function(app) {
 
 	console.log('Loading route products...');
 
-	//functions
-	var listProducts = function(request, response) {
+	//routes
+	app.get('/products', function(request, response) {
 
 		console.log('Listing products...');
 
@@ -16,16 +16,25 @@ module.exports = function(app) {
 			if (err) {
 				console.log(err);
 			}
-			response.render('products/list', {results: results});
+
+			response.format({
+				//when request headers come with text/html, execute this function
+				html: function() {
+					response.render('products/list', {results: results});
+				},
+				//when request header = application/json, execute this function
+				json: function() { 
+					response.json(results); 
+				}
+			});
+
 			//response.send(results); //send the JSON to the page
 		});
+
 		connection.end();
 		//response.render('products/list'); //
 		//response.end('<html><body><h1>Product List</h1></body></html>');
-	};
-
-	//routes
-	app.get('/products', listProducts);
+	});
 
 	app.get('/products/create', function(request, response){
 		console.log('Creating product...');
