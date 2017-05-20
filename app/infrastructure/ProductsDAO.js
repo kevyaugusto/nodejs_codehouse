@@ -6,8 +6,15 @@ function ProductsDAO(connection){
 }
 
 ProductsDAO.prototype.list = function(successCallback) {
-	this._connection.query('select * from books', successCallback);
+	this._connection.query('select * from products', successCallback);
 }; 
+
+ProductsDAO.prototype.create = function(product, successCallback){
+	console.log('Saving product into Database');
+
+	this._connection.query('insert into products set ?', product, successCallback);
+
+};
 
 module.exports = function() {
 	return ProductsDAO;

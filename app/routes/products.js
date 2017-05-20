@@ -4,15 +4,15 @@ module.exports = function(app) {
 
 	console.log('Loading route products...');
 
-	//routes
-	app.get('/products', function(request, response) {
+	//functions
+	var listProducts = function(request, response) {
 
 		console.log('Listing products...');
 
 		var connection = app.infrastructure.connectionFactory();
-		var productsDb = new app.infrastructure.ProductsDAO(connection); //new = create a new scope of this object
+		var productsDAO = new app.infrastructure.ProductsDAO(connection); //new = create a new scope of this object
 
-		productsDb.list(function(err, results) {
+		productsDAO.list(function(err, results) {
 			if (err) {
 				console.log(err);
 			}
@@ -22,7 +22,10 @@ module.exports = function(app) {
 		connection.end();
 		//response.render('products/list'); //
 		//response.end('<html><body><h1>Product List</h1></body></html>');
-	});
+	};
+
+	//routes
+	app.get('/products', listProducts);
 
 	app.get('/products/create', function(request, response){
 		console.log('Creating product...');
@@ -30,16 +33,38 @@ module.exports = function(app) {
 
 	});
 
+	app.post('/products', function(request, response){
+
+		var product = request.body;
+
+		console.log(product);
+		console.log('POST create product');
+		
+		var connection = app.infrastructure.connectionFactory();
+		var productsDAO = new app.infrastructure.ProductsDAO(connection);
+		
+		productsDAO.create(product, function(err, results){
+			
+			console.log(err);
+			console.log(results);
+
+			response.redirect('/products'); //always redirect after POST
+		});		
+		
+	});
+
 	app.get('/products/remove', function() {
 		console.log('Removing product...');
 		
 		var connection = app.infrastructure.connectionFactory();
-		var productsDb = new app.infrastructure.ProductsDAO(connection); //new = create a new scope of this object
+		var productsDAO = new app.infrastructure.ProductsDAO(connection); //new = create a new scope of this object
 		
-		var product = productsDb.loadById(id, successCallback);
+		var product = productsDAO.loadById(id, successCallback);
 
 		if (product) {
-			productsDb.remove(id, successCallback);
+			productsDAO.remove(id, successCallback);
 		}
 	});
+
+	
 }
