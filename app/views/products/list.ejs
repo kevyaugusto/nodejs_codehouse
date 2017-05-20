@@ -1,0 +1,20 @@
+<html>
+	<body>
+		<table>
+			<tr>
+				<td>ID</td>
+				<td>Title</td>
+				<td>Price</td>
+			</tr>
+			<%for(var i=0;i<results.length;i++){
+				var result = results[i];
+				%>
+			<tr>
+				<td><%=result.Id%></td>
+				<td><%=result.Name%></td>
+				<td><%=result.Price%></td>
+			</tr>
+			<%}%>
+		</table>
+	</body>
+</html>
