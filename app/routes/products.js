@@ -18,11 +18,11 @@ module.exports = function(app) {
 			}
 
 			response.format({
-				//when request headers come with text/html, execute this function
+				//when httpRequest header come with text/html, execute this function
 				html: function() {
 					response.render('products/list', {results: results});
 				},
-				//when request header = application/json, execute this function
+				//when httpRequest header = application/json, execute this function
 				json: function() { 
 					response.json(results); 
 				}
@@ -38,7 +38,7 @@ module.exports = function(app) {
 
 	app.get('/products/create', function(request, response){
 		console.log('Creating product...');
-		response.render('products/form');
+		response.render('products/form', {errorsValidation: {}, product: {}});
 
 	});
 
@@ -47,8 +47,27 @@ module.exports = function(app) {
 		var product = request.body;
 
 		console.log(product);
-		console.log('POST create product');
+		console.log('POST creating product');
 		
+		//functions from lib express-validator
+		request.assert('name', 'name is required!').notEmpty();;
+		request.assert('price', 'price is invalid!').isFloat();
+
+		var validatorErrors = request.validationErrors();
+		if (validatorErrors) {
+
+			response.format({
+				html: function(){
+					response.render('products/form', 
+						{errorsValidation: validatorErrors, product: product});
+				},
+				json: function(){
+					response.status(400).json(validatorErrors);
+				}
+			});
+			return;
+		}
+
 		var connection = app.infrastructure.connectionFactory();
 		var productsDAO = new app.infrastructure.ProductsDAO(connection);
 		

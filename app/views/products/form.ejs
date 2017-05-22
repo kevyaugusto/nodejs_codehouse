@@ -1,17 +1,28 @@
 <html>
 	<body>
+		<%if(errorsValidation) {%>
+			<div class="errors">
+				<ul>
+					<%for(var i=0;i<errorsValidation.length;i++){
+						var error=errorsValidation[i];
+					%>
+						<li><%=error.param%> - <%= error.msg%></li>
+					<%}%>
+				</ul>
+			</div>
+		<%}%>
 		<form action="/products" method="post">
 			<div>
 				<label for="name">Product name</label>
-				<input type="text" id="name" name="Name" placeholder="Type the product name"></input>
+				<input type="text" id="name" name="name" value="<%=product.Name%>" placeholder="Type the product name"></input>
 			</div>
 			<div>
 				<label for="price">Product price</label>
-				<input type="text" id="price" name="Price" placeholder="2.50"></input>
+				<input type="text" id="price" name="price" value="<%=product.price%>" placeholder="2.50"></input>
 			</div>
 			<div>
 				<label for="description">Product description</label>
-				<textarea cols="10" rows="10" id="description" name="Description" placeholder="Type the product description"></textarea>
+				<textarea cols="10" rows="10" id="description" name="Description" placeholder="Type the product description"><%=product.Description%></textarea>
 			</div>
 
 			<input type="submit" value="Save"></input>

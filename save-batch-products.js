@@ -16,12 +16,12 @@ var clientHttp = http.request(configurations, function(response) {
 	console.log(response.statusCode);
 	
 	response.on('data', function(body) {
-		console.log('Body', + body);
+		console.log('Body:' + body);
 	});
 });
 
 var productSample = {
-	Name: 'Product test batch',
+	Name: '',
 	Price: 183,
 	Description: 'Product to save batch products tsestes test 22'
 };
