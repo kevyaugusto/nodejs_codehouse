@@ -209,7 +209,8 @@
     <script>
         var socket = io();
         socket.on("newPromotion", function(data) {
-            alert("Product in promotion: " + data.product.name);
+            console.log(data);
+            alert("Product in promotion: " + data.product.id);
         });
     </script>
 </body>

@@ -19,6 +19,9 @@ module.exports = function(app) {
 	app.post("/promotions", function(request, response) {
 		var promotionPosted = request.body;
 		console.log(promotionPosted);
+
+		app.get("webSocketIO").emit("newPromotion", promotionPosted); //emit to client new promotion using socketIO. View app.js
+
 		response.redirect("promotions/form"); //always redirect in a POST method!!!! avoid user press f5 and post n times the same data
 	});
 };

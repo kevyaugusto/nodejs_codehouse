@@ -7,7 +7,6 @@ module.exports = function(app) {
 		productsDAO.list(function(errors, results) {
 			response.render('home/index', {products: results});
 		});
-
 		connection.end();
 
 	});
