@@ -1,0 +1,20 @@
+<html>
+	<body>
+		<form action='/promotions' method='post'>
+		
+		<div>
+			<input type="text" name="message"></input>
+		</div>
+		<div>
+			<select name="product[Id]">
+				<%for(var i=0; i < products.length; i++){%>
+					<option value="<%=products[i].Id%>"><%=products[i].Name%></option>
+				<%}%>
+			</select>
+		</div>
+
+		<input type="submit" value="Save promotion" />
+
+		</form>
+	</body>
+</html>

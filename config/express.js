@@ -7,6 +7,8 @@ module.exports = function () {
 	console.log('Loading express module...');
 
 	var app = express();
+
+	app.use(express.static('./app/public')); //allow files (CSS, JS, Imgs, etc) to be read in express when requesting the page
 	app.set('view engine', 'ejs'); //ejs = embeddedjs
 	app.set('views', './app/views'); //set the path where views will be placed
 
