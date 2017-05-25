@@ -205,11 +205,11 @@
             </div>
         </div>
     </footer>
-    <script src="/socket.io/socket.io.js"></script>
+    <script src="/socket.io/socket.io.js"></script>    
     <script>
         var socket = io();
-        socket.on('novaPromocao', function(data) {
-            alert("Livro em promoção " + data.livro.id);
+        socket.on("newPromotion", function(data) {
+            alert("Product in promotion: " + data.product.name);
         });
     </script>
 </body>
