@@ -1,15 +1,26 @@
 var mysql = require('mysql');
 
-function createDbConnection() {
+var createDbConnection = function () {
 
 	console.log('Executing createDbConnection...');
 
-	return mysql.createConnection({
-		host: 'localhost',
-		user: 'root',
-		password: 'root',
-		database: 'codehouse_nodejs'
-	});
+	if (!process.env.NODE_ENV) {
+		return mysql.createConnection({
+			host: 'localhost',
+			user: 'root',
+			password: 'root',
+			database: 'codehouse_nodejs'
+		});
+	}
+
+	if (process.env.NODE_ENV == "test") {
+		return mysql.createConnection({
+			host: 'localhost',
+			user: 'root',
+			password: 'root',
+			database: 'codehouse_nodejs_test'
+		});
+	}	
 }
 
 //wrapper (embrulho) pattern

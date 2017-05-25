@@ -54,14 +54,18 @@ module.exports = function(app) {
 		request.assert('price', 'price is invalid!').isFloat();
 
 		var validatorErrors = request.validationErrors();
+		console.log(validatorErrors);
+
 		if (validatorErrors) {
 
 			response.format({
 				html: function(){
-					response.render('products/form', 
+					console.log('html');
+					response.status(400).render('products/form', 
 						{errorsValidation: validatorErrors, product: product});
 				},
 				json: function(){
+					console.log('json');
 					response.status(400).json(validatorErrors);
 				}
 			});
